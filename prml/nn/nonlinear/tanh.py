@@ -9,8 +9,7 @@ class Tanh(Function):
         return self.out
 
     def _backward(self, delta, x):
-        dx = delta * (1 - self.out ** 2)
-        return dx
+        return delta * (1 - self.out ** 2)
 
 
 def tanh(x):

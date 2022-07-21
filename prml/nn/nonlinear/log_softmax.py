@@ -11,8 +11,7 @@ class LogSoftmax(Function):
 
     def _backward(self, delta, x):
         softmax = np.exp(self.output)
-        dx = delta - softmax * delta.sum(axis=-1, keepdims=True)
-        return dx
+        return delta - softmax * delta.sum(axis=-1, keepdims=True)
 
 
 def log_softmax(x):

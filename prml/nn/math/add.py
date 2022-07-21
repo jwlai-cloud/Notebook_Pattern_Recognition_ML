@@ -23,7 +23,7 @@ class AddBias(Function):
     @staticmethod
     def _backward(delta, x, y):
         dx = delta
-        dy = np.sum(delta, axis=tuple(i for i in range(x.ndim - 1)))
+        dy = np.sum(delta, axis=tuple(range(x.ndim - 1)))
         return dx, dy
 
 

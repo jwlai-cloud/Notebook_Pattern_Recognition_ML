@@ -45,7 +45,7 @@ class PCA(object):
         """
         method_list = ["eigen", "em"]
         if method not in method_list:
-            print("availabel methods are {}".format(method_list))
+            print(f"availabel methods are {method_list}")
         self.mean = np.mean(X, axis=0)
         getattr(self, method)(X - self.mean, iter_max)
 
@@ -61,11 +61,7 @@ class PCA(object):
             vectors = (X.T @ vectors) / np.sqrt(sample_size * values)
             index = sample_size - self.n_components
         self.I = np.eye(self.n_components)
-        if index == 0:
-            self.var = 0
-        else:
-            self.var = np.mean(values[:index])
-
+        self.var = 0 if index == 0 else np.mean(values[:index])
         self.W = vectors[:, index:].dot(np.sqrt(np.diag(values[index:]) - self.var * self.I))
         self.__M = self.W.T @ self.W + self.var * self.I
         self.C = self.W @ self.W.T + self.var * np.eye(n_features)
@@ -78,7 +74,7 @@ class PCA(object):
         self.I = np.eye(self.n_components)
         self.W = np.eye(np.size(X, 1), self.n_components)
         self.var = 1.
-        for i in range(iter_max):
+        for _ in range(iter_max):
             W = np.copy(self.W)
             stats = self._expectation(X)
             self._maximization(X, *stats)

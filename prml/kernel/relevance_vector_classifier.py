@@ -96,8 +96,7 @@ class RelevanceVectorClassifier(object):
             X = X[:, None]
         assert X.ndim == 2
         phi = self.kernel(X, self.X)
-        label = (phi @ self.mean > 0).astype(np.int)
-        return label
+        return (phi @ self.mean > 0).astype(np.int)
 
     def predict_proba(self, X):
         """

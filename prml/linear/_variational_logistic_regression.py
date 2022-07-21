@@ -134,5 +134,4 @@ class VariationalLogisticRegression(LogisticRegression):
         """
         mu_a = x @ self.w_mean
         var_a = np.sum(x @ self.w_var * x, axis=1)
-        y = self._sigmoid(mu_a / np.sqrt(1 + np.pi * var_a / 8))
-        return y
+        return self._sigmoid(mu_a / np.sqrt(1 + np.pi * var_a / 8))

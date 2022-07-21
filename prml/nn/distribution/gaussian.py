@@ -34,12 +34,7 @@ class GaussianLogPDF(Function):
 
     def _forward(self, x, mean, std):
         self.mahalanobis_distance = np.square((x - mean) / std)
-        log_pdf = -0.5 * (
-            self.mahalanobis_distance
-            + 2 * np.log(std)
-            + self.log2pi
-        )
-        return log_pdf
+        return -0.5 * (self.mahalanobis_distance + 2 * np.log(std) + self.log2pi)
 
     def _backward(self, delta, x, mean, std):
         dx = -0.5 * delta * (x - mean) / np.square(std)

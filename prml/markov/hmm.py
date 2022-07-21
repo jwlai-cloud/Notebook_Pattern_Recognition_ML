@@ -45,7 +45,7 @@ class HiddenMarkovModel(object):
         """
         params = np.hstack(
             (self.initial_proba.ravel(), self.transition_proba.ravel()))
-        for i in range(iter_max):
+        for _ in range(iter_max):
             p_hidden, p_transition = self.expect(seq)
             self.maximize(seq, p_hidden, p_transition)
             params_new = np.hstack(
@@ -124,8 +124,7 @@ class HiddenMarkovModel(object):
 
         forward = np.asarray(forward)
         backward = np.asarray(backward)
-        posterior = forward * backward
-        return posterior
+        return forward * backward
 
     def filtering(self, seq):
         """

@@ -31,7 +31,7 @@ class Function(object):
                 backprop_queue.enqueue(self.args[0])
 
     def _out_depth(self):
-        return max([arg.depth for arg in self.args]) + 1
+        return max(arg.depth for arg in self.args) + 1
 
     @staticmethod
     def _autobroadcast(arg):
@@ -45,10 +45,7 @@ class Function(object):
 
     @staticmethod
     def _convert2array(arg):
-        if not isinstance(arg, Array):
-            return asarray(arg)
-        else:
-            return arg
+        return arg if isinstance(arg, Array) else asarray(arg)
 
 
 class BroadcastTo(Function):
@@ -60,20 +57,18 @@ class BroadcastTo(Function):
         self.shape = shape
 
     def _forward(self, x):
-        output = np.broadcast_to(x, self.shape)
-        return output
+        return np.broadcast_to(x, self.shape)
 
     @staticmethod
     def _backward(delta, x):
         dx = delta
         xdim = getattr(x, "ndim", 0)
         xshape = getattr(x, "shape", ())
-        if delta.ndim != xdim:
+        if dx.ndim != xdim:
             dx = dx.sum(axis=tuple(range(dx.ndim - xdim)))
             if isinstance(dx, np.number):
                 dx = np.array(dx)
-        axis = tuple(i for i, len_ in enumerate(xshape) if len_ == 1)
-        if axis:
+        if axis := tuple(i for i, len_ in enumerate(xshape) if len_ == 1):
             dx = dx.sum(axis=axis, keepdims=True)
         return dx
 

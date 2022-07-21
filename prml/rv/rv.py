@@ -27,7 +27,7 @@ class RandomVariable(object):
         for key, value in self.parameter.items():
             string += (" " * indent)
             if isinstance(value, RandomVariable):
-                string += f"{key}=" + value.__format__(str(indent + 4))
+                string += f"{key}={value.__format__(str(indent + 4))}"
             else:
                 string += f"{key}={value}"
             string += "\n"

@@ -9,9 +9,7 @@ class TestGaussian(unittest.TestCase):
         mu = nn.array(0)
         sigma = nn.softplus(nn.array(-1))
         gaussian = nn.Gaussian(mu, sigma)
-        sample = []
-        for _ in range(1000):
-            sample.append(gaussian.draw().value)
+        sample = [gaussian.draw().value for _ in range(1000)]
         self.assertTrue(np.allclose(np.mean(sample), 0, rtol=0.1, atol=0.1), np.mean(sample))
         self.assertTrue(np.allclose(np.std(sample), gaussian.std.value, 0.1, 0.1))
 

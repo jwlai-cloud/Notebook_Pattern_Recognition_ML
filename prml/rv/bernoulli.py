@@ -37,31 +37,22 @@ class Bernoulli(RandomVariable):
             self.parameter["mu"] = mu
         elif isinstance(mu, Beta):
             self.parameter["mu"] = mu
-        else:
-            if mu is not None:
-                raise TypeError(f"{type(mu)} is not supported for mu")
+        elif mu is None:
             self.parameter["mu"] = None
+        else:
+            raise TypeError(f"{type(mu)} is not supported for mu")
 
     @property
     def ndim(self):
-        if hasattr(self.mu, "ndim"):
-            return self.mu.ndim
-        else:
-            return None
+        return self.mu.ndim if hasattr(self.mu, "ndim") else None
 
     @property
     def size(self):
-        if hasattr(self.mu, "size"):
-            return self.mu.size
-        else:
-            return None
+        return self.mu.size if hasattr(self.mu, "size") else None
 
     @property
     def shape(self):
-        if hasattr(self.mu, "shape"):
-            return self.mu.shape
-        else:
-            return None
+        return self.mu.shape if hasattr(self.mu, "shape") else None
 
     def _fit(self, X):
         if isinstance(self.mu, Beta):

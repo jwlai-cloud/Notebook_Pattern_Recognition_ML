@@ -28,7 +28,7 @@ class BayesianPCA(PCA):
         self.mean = np.mean(X, axis=0)
         self.I = np.eye(self.n_components)
         if initial not in initial_list:
-            print("availabel initializations are {}".format(initial_list))
+            print(f"availabel initializations are {initial_list}")
         if initial == "random":
             self.W = np.eye(np.size(X, 1), self.n_components)
             self.var = 1.
