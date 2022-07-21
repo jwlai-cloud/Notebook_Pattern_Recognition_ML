@@ -114,10 +114,7 @@ class MultivariateGaussianMixture(RandomVariable):
 
     @property
     def shape(self):
-        if hasattr(self.mu, "shape"):
-            return self.mu.shape[1:]
-        else:
-            return None
+        return self.mu.shape[1:] if hasattr(self.mu, "shape") else None
 
     def _gauss(self, X):
         d = X[:, None, :] - self.mu

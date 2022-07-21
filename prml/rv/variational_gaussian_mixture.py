@@ -25,10 +25,7 @@ class VariationalGaussianMixture(RandomVariable):
         """
         super().__init__()
         self.n_components = n_components
-        if alpha0 is None:
-            self.alpha0 = 1 / n_components
-        else:
-            self.alpha0 = alpha0
+        self.alpha0 = 1 / n_components if alpha0 is None else alpha0
         self.m0 = m0
         self.W0 = W0
         self.dof0 = dof0
@@ -115,8 +112,7 @@ class VariationalGaussianMixture(RandomVariable):
         ln_Lambda = digamma(0.5 * (self.dof - np.arange(self.ndim)[:, None])).sum(axis=0) + self.ndim * np.log(2) + np.linalg.slogdet(self.W)[1]
         ln_r = ln_pi + 0.5 * ln_Lambda + maha_sq
         ln_r -= logsumexp(ln_r, axis=-1)[:, None]
-        r = np.exp(ln_r)
-        return r
+        return np.exp(ln_r)
 
     def _variational_maximization(self, X, r):
         self.component_size = r.sum(axis=0)

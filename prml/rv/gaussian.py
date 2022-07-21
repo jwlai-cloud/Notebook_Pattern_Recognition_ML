@@ -33,10 +33,10 @@ class Gaussian(RandomVariable):
             self.parameter["mu"] = mu
         elif isinstance(mu, Gaussian):
             self.parameter["mu"] = mu
-        else:
-            if mu is not None:
-                raise TypeError(f"{type(mu)} is not supported for mu")
+        elif mu is None:
             self.parameter["mu"] = None
+        else:
+            raise TypeError(f"{type(mu)} is not supported for mu")
 
     @property
     def var(self):
@@ -88,24 +88,15 @@ class Gaussian(RandomVariable):
 
     @property
     def ndim(self):
-        if hasattr(self.mu, "ndim"):
-            return self.mu.ndim
-        else:
-            return None
+        return self.mu.ndim if hasattr(self.mu, "ndim") else None
 
     @property
     def size(self):
-        if hasattr(self.mu, "size"):
-            return self.mu.size
-        else:
-            return None
+        return self.mu.size if hasattr(self.mu, "size") else None
 
     @property
     def shape(self):
-        if hasattr(self.mu, "shape"):
-            return self.mu.shape
-        else:
-            return None
+        return self.mu.shape if hasattr(self.mu, "shape") else None
 
     def _fit(self, X):
         mu_is_gaussian = isinstance(self.mu, Gaussian)
@@ -165,8 +156,6 @@ class Gaussian(RandomVariable):
             a = self.tau.a + 0.5 * N
             b = self.tau.b + 0.5 * N * var
             self.tau = Gamma(a, b)
-        elif mu_is_gaussian and tau_is_gamma:
-            raise NotImplementedError
         else:
             raise NotImplementedError
 

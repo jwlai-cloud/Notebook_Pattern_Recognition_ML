@@ -45,10 +45,10 @@ class Gamma(RandomVariable):
             if (a <= 0).any():
                 raise ValueError("a must be positive")
             self.parameter["a"] = a
-        else:
-            if a is not None:
-                raise TypeError(f"{type(a)} is not supported for a")
+        elif a is None:
             self.parameter["a"] = None
+        else:
+            raise TypeError(f"{type(a)} is not supported for a")
 
     @property
     def b(self):
@@ -64,10 +64,10 @@ class Gamma(RandomVariable):
             if (b <= 0).any():
                 raise ValueError("b must be positive")
             self.parameter["b"] = b
-        else:
-            if b is not None:
-                raise TypeError(f"{type(b)} is not supported for b")
+        elif b is None:
             self.parameter["b"] = None
+        else:
+            raise TypeError(f"{type(b)} is not supported for b")
 
     @property
     def ndim(self):

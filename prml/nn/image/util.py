@@ -34,8 +34,7 @@ def img2patch(img, size, step=1):
         np.subtract(img.shape[1: -1], size) // np.array(step) + 1)
     out_shape = (len(img),) + out_shape + size + (np.size(img, -1),)
     strides = index_strides + window_strides
-    patch = as_strided(img, shape=out_shape, strides=strides)
-    return patch
+    return as_strided(img, shape=out_shape, strides=strides)
 
 
 def _patch2img(x, stride, shape):

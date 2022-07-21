@@ -28,22 +28,16 @@ class Beta(RandomVariable):
         """
         super().__init__()
         if not isinstance(n_ones, (int, float, np.number, np.ndarray)):
-            raise ValueError(
-                "{} is not supported for n_ones"
-                .format(type(n_ones))
-            )
+            raise ValueError(f"{type(n_ones)} is not supported for n_ones")
         if not isinstance(n_zeros, (int, float, np.number, np.ndarray)):
-            raise ValueError(
-                "{} is not supported for n_zeros"
-                .format(type(n_zeros))
-            )
+            raise ValueError(f"{type(n_zeros)} is not supported for n_zeros")
         n_ones = np.asarray(n_ones)
         n_zeros = np.asarray(n_zeros)
         if n_ones.shape != n_zeros.shape:
             raise ValueError(
-                "the sizes of the arrays don't match: {}, {}"
-                .format(n_ones.shape, n_zeros.shape)
+                f"the sizes of the arrays don't match: {n_ones.shape}, {n_zeros.shape}"
             )
+
         self.n_ones = n_ones
         self.n_zeros = n_zeros
 

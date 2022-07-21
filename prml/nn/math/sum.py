@@ -27,8 +27,7 @@ class SumAxisOrKeepdims(Function):
                     axis_positive.append(axis)
             for axis in sorted(axis_positive):
                 delta = np.expand_dims(delta, axis)
-        dx = np.broadcast_to(delta, x.shape)
-        return dx
+        return np.broadcast_to(delta, x.shape)
 
 class SumSimple(Function):
 

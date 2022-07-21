@@ -100,8 +100,4 @@ class SupportVectorClassifier(object):
         distance : (sample_size,) ndarray
             distance from the boundary
         """
-        distance = np.sum(
-            self.a * self.t
-            * self.kernel(x, self.X),
-            axis=-1) + self.b
-        return distance
+        return np.sum(self.a * self.t * self.kernel(x, self.X), axis=-1) + self.b

@@ -52,6 +52,9 @@ class PolynomialFeature(object):
         x_t = x.transpose()
         features = [np.ones(len(x))]
         for degree in range(1, self.degree + 1):
-            for items in itertools.combinations_with_replacement(x_t, degree):
-                features.append(functools.reduce(lambda x, y: x * y, items))
+            features.extend(
+                functools.reduce(lambda x, y: x * y, items)
+                for items in itertools.combinations_with_replacement(x_t, degree)
+            )
+
         return np.asarray(features).transpose()

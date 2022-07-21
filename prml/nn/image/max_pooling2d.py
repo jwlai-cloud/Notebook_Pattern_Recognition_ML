@@ -27,21 +27,13 @@ class MaxPooling2d(Function):
         if isinstance(tup, int):
             tup = (tup,) * 2
         if not isinstance(tup, tuple):
-            raise TypeError(
-                "Unsupported type for {}: {}".format(name, type(tup))
-            )
+            raise TypeError(f"Unsupported type for {name}: {type(tup)}")
         if len(tup) != 2:
-            raise ValueError(
-                "the length of {} must be 2, not {}".format(name, len(tup))
-            )
-        if not all([isinstance(n, int) for n in tup]):
-            raise TypeError(
-                "Unsuported type for {}".format(name)
-            )
-        if not all([n >= 0 for n in tup]):
-            raise ValueError(
-                "{} must be non-negative values".format(name)
-            )
+            raise ValueError(f"the length of {name} must be 2, not {len(tup)}")
+        if not all(isinstance(n, int) for n in tup):
+            raise TypeError(f"Unsuported type for {name}")
+        if any(n < 0 for n in tup):
+            raise ValueError(f"{name} must be non-negative values")
         return tup
 
     def _forward(self, x):

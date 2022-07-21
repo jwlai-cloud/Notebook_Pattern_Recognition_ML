@@ -25,5 +25,4 @@ def sir(func, rv, n):
     assert weight.shape == (n * 10,), weight.shape
     weight /= np.sum(weight)
     index = np.random.choice(n * 10, n, p=weight)
-    sample = sample_candidate[index]
-    return sample
+    return sample_candidate[index]

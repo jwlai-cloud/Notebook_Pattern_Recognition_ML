@@ -23,10 +23,7 @@ class Deconvolve2dFunction(Function):
         self.out_ch = out_ch
         self.stride = stride
         self.pad = (0,) + pad + (0,)
-        if shape is None:
-            self.shape = None
-        else:
-            self.shape = shape
+        self.shape = None if shape is None else shape
 
     def _forward(self, x, y):
         if self.shape is None:

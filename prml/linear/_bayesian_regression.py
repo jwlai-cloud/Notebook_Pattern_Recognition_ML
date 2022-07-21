@@ -87,8 +87,7 @@ class BayesianRegression(Regression):
             w_sample = np.random.multivariate_normal(
                 self.w_mean, self.w_cov, size=sample_size,
             )
-            y_sample = x @ w_sample.T
-            return y_sample
+            return x @ w_sample.T
         y = x @ self.w_mean
         if return_std:
             y_var = 1 / self.beta + np.sum(x @ self.w_cov * x, axis=1)

@@ -23,7 +23,7 @@ class GaussianFeature(object):
             mean = mean[:, None]
         else:
             assert mean.ndim == 2
-        assert isinstance(var, float) or isinstance(var, int)
+        assert isinstance(var, (float, int))
         self.mean = mean
         self.var = var
 
@@ -50,6 +50,5 @@ class GaussianFeature(object):
             assert x.ndim == 2
         assert np.size(x, 1) == np.size(self.mean, 1)
         basis = [np.ones(len(x))]
-        for m in self.mean:
-            basis.append(self._gauss(x, m))
+        basis.extend(self._gauss(x, m) for m in self.mean)
         return np.asarray(basis).transpose()

@@ -53,11 +53,11 @@ class GaussianProcessRegressor(object):
         Gram = self.kernel(X, X)
         self.covariance = Gram + I / self.beta
         self.precision = np.linalg.inv(self.covariance)
-        for i in range(iter_max):
+        for _ in range(iter_max):
             gradients = self.kernel.derivatives(X, X)
             updates = np.array(
                 [-np.trace(self.precision.dot(grad)) + t.dot(self.precision.dot(grad).dot(self.precision).dot(t)) for grad in gradients])
-            for j in range(iter_max):
+            for _ in range(iter_max):
                 self.kernel.update_parameters(learning_rate * updates)
                 Gram = self.kernel(X, X)
                 self.covariance = Gram + I / self.beta

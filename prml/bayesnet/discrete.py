@@ -35,7 +35,7 @@ class DiscreteVariable(RandomVariable):
         self.is_observed = False
 
     def __repr__(self):
-        string = f"DiscreteVariable("
+        string = "DiscreteVariable("
         if self.is_observed:
             string += f"observed={self.proba})"
         else:
@@ -155,10 +155,7 @@ class DiscreteProbability(ProbabilityFunction):
         self.name = name
 
     def __repr__(self):
-        if self.name is not None:
-            return self.name
-        else:
-            return super().__repr__()
+        return self.name if self.name is not None else super().__repr__()
 
     def receive_message(self, message, giver, proprange):
         self.message_from[giver] = message
@@ -236,7 +233,4 @@ def discrete(table, *condition, out=None, name=None):
         output discrete random variable of discrete probability function
     """
     function = DiscreteProbability(table, *condition, out=out, name=name)
-    if len(function.out) == 1:
-        return function.out[0]
-    else:
-        return function.out
+    return function.out[0] if len(function.out) == 1 else function.out

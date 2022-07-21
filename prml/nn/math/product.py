@@ -14,17 +14,13 @@ class Product(Function):
 
     def _forward(self, x):
         self.output = np.prod(x, axis=self.axis, keepdims=True)
-        if not self.keepdims:
-            return np.squeeze(self.output)
-        else:
-            return self.output
+        return self.output if self.keepdims else np.squeeze(self.output)
 
     def backward(self, delta, x):
         if not self.keepdims and self.axis is not None:
             for ax in self.axis:
                 delta = np.expand_dims(delta, ax)
-        dx = delta * self.output / x
-        return dx
+        return delta * self.output / x
 
 
 def prod(x, axis=None, keepdims=False):

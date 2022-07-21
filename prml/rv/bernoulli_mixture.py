@@ -80,8 +80,7 @@ class BernoulliMixture(RandomVariable):
     def _expectation(self, X):
         log_resps = np.log(self.coef) + self._log_bernoulli(X)
         log_resps -= logsumexp(log_resps, axis=-1)[:, None]
-        resps = np.exp(log_resps)
-        return resps
+        return np.exp(log_resps)
 
     def _maximization(self, X, resp):
         Nk = np.sum(resp, axis=0)

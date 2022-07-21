@@ -23,7 +23,7 @@ class SigmoidalFeature(object):
             mean = mean[:, None]
         else:
             assert mean.ndim == 2
-        if isinstance(coef, int) or isinstance(coef, float):
+        if isinstance(coef, (int, float)):
             if np.size(mean, 1) == 1:
                 coef = np.array([coef])
             else:
@@ -57,6 +57,5 @@ class SigmoidalFeature(object):
             assert x.ndim == 2
         assert np.size(x, 1) == np.size(self.mean, 1)
         basis = [np.ones(len(x))]
-        for m in self.mean:
-            basis.append(self._sigmoid(x, m))
+        basis.extend(self._sigmoid(x, m) for m in self.mean)
         return np.asarray(basis).transpose()

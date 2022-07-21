@@ -24,10 +24,10 @@ class Network(object):
     def __setattr__(self, key, value):
         if self.setting_parameter:
             if isinstance(value, Array):
-                self.parameter[self.__class__.__name__ + "." + key] = value
+                self.parameter[f"{self.__class__.__name__}.{key}"] = value
             elif isinstance(value, Network):
                 for name, param in value.parameter.items():
-                    self.parameter[self.__class__.__name__ + "." + key + "." + name] = param
+                    self.parameter[f"{self.__class__.__name__}.{key}.{name}"] = param
 
         object.__setattr__(self, key, value)
 

@@ -26,8 +26,7 @@ class Autoencoder(nn.Network):
             h = nn.tanh(h @ self.parameter[f"w_encode{i}"] + self.parameter[f"b_encode{i}"])
         for i in range(self.n_unit - 2, 0, -1):
             h = nn.tanh(h @ self.parameter[f"w_decode{i}"] + self.parameter[f"b_decode{i}"])
-        x_ = h @ self.parameter["w_decode0"] + self.parameter["b_decode0"]
-        return x_
+        return h @ self.parameter["w_decode0"] + self.parameter["b_decode0"]
 
     def fit(self, x, n_iter=100, learning_rate=1e-3):
         optimizer = nn.optimizer.Adam(self.parameter, learning_rate)
